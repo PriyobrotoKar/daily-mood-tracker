@@ -2,6 +2,7 @@ const monthYear = document.getElementById("month-year");
 const prevNextBtns = document.querySelectorAll(".calender-button");
 const dates = document.querySelector(".dates");
 const moodSelector = document.querySelector(".mood-selector");
+const currentDateElement = document.getElementById("today-date");
 
 const moods = [
   {
@@ -50,6 +51,8 @@ let currentDate = date.getDate();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
+currentDateElement.innerHTML = `${months[currentMonth]} ${currentDate}, ${currentYear}`;
+
 function getMood(date) {
   const moodData = JSON.parse(localStorage.getItem("moodData")) || [];
 
@@ -64,7 +67,7 @@ function saveMood(mood) {
   const moodData = JSON.parse(localStorage.getItem("moodData")) || [];
 
   const newMood = {
-    date: new Date(currentYear, currentMonth, currentDate),
+    date: new Date(date.getFullYear(), date.getMonth(), currentDate),
     emoji: mood,
   };
 
@@ -109,7 +112,7 @@ function renderCalender() {
 
     const li = createDateElement(i);
 
-    if (i === currentDate) {
+    if (i === currentDate && currentMonth === date.getMonth()) {
       li.classList.add("active-date");
     }
 
